@@ -1,6 +1,113 @@
-@HotelProjectAPI_HostAddress = http://localhost:5135
+@HotelProjectAPI_HostAddress = https://localhost:7213
 
-GET {{HotelProjectAPI_HostAddress}}/weatherforecast/
-Accept: application/json
+###
+
+GET {{HotelProjectAPI_HostAddress}}/api/countries
+
+###
+
+POST {{HotelProjectAPI_HostAddress}}/api/countries
+Content-Type: application/json
+
+
+    {
+    "name": "D",
+    "code": "40",
+    "hotels": []
+  }
+
+###
+
+@countryid=1
+GET {{HotelProjectAPI_HostAddress}}/api/countries/{{countryid}}
+
+###
+
+
+
+###
+
+PUT {{HotelProjectAPI_HostAddress}}/api/countries/{countryid}
+Content-Type: application/json
+
+    {
+      "countryId": 6"
+    "name": "DD",
+    "code": "40",
+    "hotels": []
+  }
+
+###
+
+POST {{HotelProjectAPI_HostAddress}}/api/countries
+Content-Type: application/json
+
+{
+  //Country
+}
+
+###
+
+GET {{HotelProjectAPI_HostAddress}}/api/countries/{{countryid}}
+
+###
+
+PUT {{HotelProjectAPI_HostAddress}}/api/countries/{{countryid}}
+Content-Type: application/json
+`
+{
+  "countryId": 7,
+  "name": "D",
+  "code": "40"
+ 
+}
+###
+
+GET {{HotelProjectAPI_HostAddress}}/api/hotels
+
+###
+
+POST {{HotelProjectAPI_HostAddress}}/api/hotels
+Content-Type: application/json
+
+{
+  
+    "name": "bfb",
+    "address": "st10",
+    "rating": 555,
+    "countryId": 1
+    
+  }
+
+###
+@id=1
+PUT {{HotelProjectAPI_HostAddress}}/api/hotels/{{id}}
+Content-Type: application/json
+
+ {
+    "id": 1,
+    "name": "bfb",
+    "address": "st10",
+    "rating": 4.5,
+    "countryId": 1
+    
+  }
+
+###
+
+POST {{HotelProjectAPI_HostAddress}}/api/hotels
+Content-Type: application/json
+
+{
+  //Hotel
+}
+
+###
+
+GET {{HotelProjectAPI_HostAddress}}/api/hotels
+
+###
+
+GET {{HotelProjectAPI_HostAddress}}/api/hotels/{{id}}
 
 ###

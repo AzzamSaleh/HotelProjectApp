@@ -1,9 +1,12 @@
+using HotelProjectAPI.Contracts;
 using HotelProjectAPI.Data;
+using HotelProjectAPI.MappingProfiles;
+using HotelProjectAPI.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the IoC container.
 
 // Configure DbContext with SQL Server connection string from configuration
 var connectionString = builder.Configuration.GetConnectionString("HotelProjectDbConnectionString");
@@ -11,7 +14,26 @@ var connectionString = builder.Configuration.GetConnectionString("HotelProjectDb
 builder.Services.AddDbContext<HotelProjectDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddControllers();
+
+
+builder.Services.AddScoped<ICountriesService,CountriesService>();
+builder.Services.AddScoped<IHotelsService,HotelsService>();
+
+builder.Services.AddAutoMapper(cfg  =>
+{
+    cfg.AddProfile<HotelMappingProfile>();
+    cfg.AddProfile<CountryMappingProfile>();
+});
+
+
+
+
+
+builder.Services.AddControllers()
+    .AddJsonOptions(opt =>
+    {
+        opt.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+    } );
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
