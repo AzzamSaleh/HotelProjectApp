@@ -1,4 +1,3 @@
-using HotelProjectAPI.Contracts;
 using HotelProjectAPI.Data;
 using HotelProjectAPI.MappingProfiles;
 using HotelProjectAPI.Services;
