@@ -3,8 +3,7 @@
 ###
 
 GET {{HotelProjectAPI_HostAddress}}/api/countries
-
-###
+Authorization: Bearer someToken
 
 POST {{HotelProjectAPI_HostAddress}}/api/countries
 Content-Type: application/json
@@ -109,5 +108,63 @@ GET {{HotelProjectAPI_HostAddress}}/api/hotels
 ###
 
 GET {{HotelProjectAPI_HostAddress}}/api/hotels/{{id}}
+
+###
+
+GET {{HotelProjectAPI_HostAddress}}/api/hotels
+
+###
+
+GET {{HotelProjectAPI_HostAddress}}/api/hotels/{{id}}
+
+###
+
+GET {{HotelProjectAPI_HostAddress}}/api/hotels/{{id}}
+
+###
+
+GET {{HotelProjectAPI_HostAddress}}/api/hotels/{{id}}
+
+###
+
+POST {{HotelProjectAPI_HostAddress}}/api/countries
+Content-Type: application/json
+
+{
+  //CreateCountryDto
+}
+
+###
+
+### Register
+
+
+POST {{HotelProjectAPI_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+    "email": "testGG@exhample.com",
+  "password": "P@assword123!",
+  "firstName": "John",
+  
+}
+
+###
+# POST {{HotelProjectAPI_HostAddress}}/api/defaultauth/register
+# Content-Type: application/json
+# {
+#   "email": "testGG@example.com",
+#   "password": "P@assword123!"
+# }
+
+POST {{HotelProjectAPI_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+ 
+  "email": "testGG@example.com",
+  "password": "P@assword123!"
+
+}
 
 ###

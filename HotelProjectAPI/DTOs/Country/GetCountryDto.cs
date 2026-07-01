@@ -2,15 +2,18 @@
 
 namespace HotelProjectAPI.DTOs.Country;
 
-public record GetCountryDto(
-    int Id,
-    string Name,
-    string Code,
-    List<GetHotelSlimDto> Hotels
-    );
 
-public record GetCountriesDto(
-    int Id,
-    string Name,
-    string Code
-    );
+public class GetCountryDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Code { get; set; } = string.Empty;
+    public List<GetHotelSlimDto> Hotels { get; set; } = new();
+}
+
+public class GetCountriesDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Code { get; set; } = string.Empty;
+}

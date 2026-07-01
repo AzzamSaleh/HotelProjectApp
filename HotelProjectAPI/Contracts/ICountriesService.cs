@@ -1,14 +1,16 @@
 ﻿using HotelProjectAPI.DTOs.Country;
+using HotelProjectAPI.Results;
 
-namespace HotelProjectAPI.Contracts
+namespace HotelProjectAPI.Services
 {
     public interface ICountriesService
     {
-        Task<bool> CountryExistsAsync(int? countryid);
-        Task<GetCountryDto> CreateCountryAsync(CreateCountryDto createDto);
-        Task DeleteCountryAsync(int countryid);
-        Task<IEnumerable<GetCountriesDto>> GetCountriesAsync();
-        Task<GetCountryDto?> GetCountryAsync(int countryid);
-        Task UpdateCountryAsync(int countryid, UpdateCountryDto updateDto);
+        Task<bool> CountryExistsAsync(int id);
+        Task<bool> CountryExistsAsync(string name);
+        Task<Result<GetCountryDto>> CreateCountryAsync(CreateCountryDto createDto);
+        Task<Result> DeleteCountryAsync(int id);
+        Task<Result<IEnumerable<GetCountriesDto>>> GetCountriesAsync();
+        Task<Result<GetCountryDto>> GetCountryAsync(int id);
+        Task<Result> UpdateCountryAsync(int id, UpdateCountryDto updateDto);
     }
 }

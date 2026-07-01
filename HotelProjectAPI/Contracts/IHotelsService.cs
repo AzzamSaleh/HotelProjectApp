@@ -1,12 +1,16 @@
 ﻿using HotelProjectAPI.DTOs.Hotel;
-//GetAll, GetById, Create, Update, Delete
+using HotelProjectAPI.Results;
 
-public interface IHotelsService
+namespace HotelProjectAPI.Services
 {
-    Task<bool> HotelExistsAsync(int? Hotelid);
-    Task<GetHotelDto> CreateHotelAsync(CreateHotelDto createDto);
-    Task DeleteHotelAsync(int Hotelid);
-    Task<IEnumerable<GetHotelsDto>> GetHotelsAsync();
-    Task<GetHotelDto?> GetHotelAsync(int Hotelid);
-    Task UpdateHotelAsync(int Hotelid, UpdateHotelDto updateDto);
+    public interface IHotelsService
+    {
+        Task<Result<GetHotelDto>> CreateHotelAsync(CreateHotelDto hotelDto);
+        Task<Result> DeleteHotelAsync(int id);
+        Task<Result<GetHotelDto>> GetHotelAsync(int id);
+        Task<Result<IEnumerable<GetHotelDto>>> GetHotelsAsync();
+        Task<bool> HotelExistsAsync(int id);
+        Task<bool> HotelExistsAsync(string name, int countryId);
+        Task<Result> UpdateHotelAsync(int id, UpdateHotelDto updateDto);
+    }
 }

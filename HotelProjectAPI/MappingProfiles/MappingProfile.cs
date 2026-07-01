@@ -11,6 +11,7 @@ public class HotelMappingProfile : Profile
     {
         CreateMap<Hotel, GetHotelDto>()//have issue with prop that have the same name, one have a sting type and other have a country object type
             .ForMember(d => d.Country, cfg => cfg.MapFrom(s => s.Country!.Name));
+        CreateMap<Hotel, GetHotelSlimDto>();
         CreateMap<CreateHotelDto, Hotel>();
     }
 }

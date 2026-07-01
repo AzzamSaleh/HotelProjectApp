@@ -1,85 +1,59 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using HotelProjectAPI.Models;
+using HotelProjectAPI.Controllers;
 using HotelProjectAPI.Data;
 using HotelProjectAPI.DTOs.Hotel;
+using HotelProjectAPI.Models;
 using HotelProjectAPI.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 [Route("api/[controller]")]
 [ApiController]
-public class HotelsController(HotelsService hotelsService) : ControllerBase
+public class HotelsController(IHotelsService hotelsService) : BaseApiController
 {
-
-    // GET: api/Hotel
+    // GET: api/Hotels
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<GetHotelsDto>>> GetHotel()
+    public async Task<ActionResult<IEnumerable<GetHotelDto>>> GetHotels()
     {
-
-        var hotels = await hotelsService.GetHotelsAsync();
-        return Ok(hotels);
-      
-  
+        var result = await hotelsService.GetHotelsAsync();
+        return ToActionResult(result);
     }
 
-    // GET: api/Hotel/5
+    // GET: api/Hotels/5
     [HttpGet("{id}")]
     public async Task<ActionResult<GetHotelDto>> GetHotel(int id)
     {
-        var hotel = await hotelsService.GetHotelAsync(id);
-
-        if (hotel == null)
-        {
-            return NotFound();
-        }
-
-        return hotel;
+        var result = await hotelsService.GetHotelAsync(id);
+        return ToActionResult(result);
     }
 
-    // PUT: api/Hotel/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    // PUT: api/Hotels/5
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutHotel(int? id, UpdateHotelDto hotelDto)
+    public async Task<IActionResult> PutHotel(int id, UpdateHotelDto hotelDto)
     {
         if (id != hotelDto.Id)
         {
-            return BadRequest();
+            return BadRequest("Id route value must match payload Id.");
         }
 
-        try
-        {
-            await hotelsService.UpdateHotelAsync(id.Value, hotelDto);
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
-
-        return NoContent();
+        var result = await hotelsService.UpdateHotelAsync(id, hotelDto);
+        return ToActionResult(result);
     }
 
-    // POST: api/Hotel
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    // POST: api/Hotels
     [HttpPost]
     public async Task<ActionResult<GetHotelDto>> PostHotel(CreateHotelDto hotelDto)
     {
-        var resultDto = await hotelsService.CreateHotelAsync(hotelDto);
+        var result = await hotelsService.CreateHotelAsync(hotelDto);
+        if (!result.IsSuccess) return MapErrorsToResponse(result.Errors);
 
-        return CreatedAtAction(nameof(GetHotel), new { id = resultDto.Id }, resultDto);
+        return CreatedAtAction(nameof(GetHotel), new { id = result.Value!.Id }, result.Value);
     }
 
-    // DELETE: api/Hotel/5
+    // DELETE: api/Hotels/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteHotel(int? id)
+    public async Task<IActionResult> DeleteHotel(int id)
     {
-        try
-        {
-            await hotelsService.DeleteHotelAsync(id.Value);
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
-
-        return NoContent();
+        var result = await hotelsService.DeleteHotelAsync(id);
+        return ToActionResult(result);
     }
 }

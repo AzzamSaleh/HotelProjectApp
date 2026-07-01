@@ -1,72 +1,117 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using HotelProjectAPI.Constants;
 using HotelProjectAPI.Data;
 using HotelProjectAPI.DTOs.Hotel;
 using HotelProjectAPI.Models;
+using HotelProjectAPI.Results;
 using Microsoft.EntityFrameworkCore;
 
-namespace HotelProjectAPI.Services
+namespace HotelProjectAPI.Services;
+
+public class HotelsService(HotelProjectDbContext context,
+    ICountriesService countriesService,
+    IMapper mapper) : IHotelsService
 {
-    public class HotelsService(HotelProjectDbContext context, IMapper mapper ) : IHotelsService
+    public async Task<Result<IEnumerable<GetHotelDto>>> GetHotelsAsync()
     {
+        var hotels = await context.Hotels
+            .ProjectTo<GetHotelDto>(mapper.ConfigurationProvider)
+            .ToListAsync();
 
-        public async Task<IEnumerable<GetHotelsDto>> GetHotelsAsync()
+        return Result<IEnumerable<GetHotelDto>>.Success(hotels);
+    }
+
+    public async Task<Result<GetHotelDto>> GetHotelAsync(int id)
+    {
+        var hotel = await context.Hotels
+            .Where(h => h.Id == id)
+            .ProjectTo<GetHotelDto>(mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync();
+
+        if (hotel is null)
         {
-            var hotels = await context.Hotels
-                .Select(h => new GetHotelsDto(h.Id, h.Name, h.Address, h.Rating, h.CountryId))
-                .ToListAsync();
-            return hotels;
+            return Result<GetHotelDto>.Failure(new Error(ErrorCodes.NotFound, $"Hotel '{id}' was not found."));
         }
 
-        public async Task<GetHotelDto?> GetHotelAsync(int hotelid)
+        return Result<GetHotelDto>.Success(hotel);
+    }
+
+    public async Task<Result<GetHotelDto>> CreateHotelAsync(CreateHotelDto hotelDto)
+    {
+        var countryExists = await countriesService.CountryExistsAsync(hotelDto.CountryId);
+        if (!countryExists)
         {
-            var hotel = await context.Hotels
-                .Where(h => h.Id == hotelid)
-                .Select(h => new GetHotelDto(h.Id, h.Name, h.Address, h.Rating, h.Country.Name))
-                .FirstOrDefaultAsync();
-            return hotel;
+            return Result<GetHotelDto>.Failure(new Error(ErrorCodes.NotFound, $"Country '{hotelDto.CountryId}' was not found."));
         }
 
-        public async Task<GetHotelDto> CreateHotelAsync(CreateHotelDto createDto)
+        var duplicate = await HotelExistsAsync(hotelDto.Name, hotelDto.CountryId);
+        if (duplicate)
         {
-
-            var hotel = new Hotel
-            {
-                Name = createDto.Name,
-                Address = createDto.Address,
-                Rating = createDto.Rating,
-                CountryId = createDto.CountryId
-            };
-            context.Hotels.Add(hotel);
-            await context.SaveChangesAsync();//201
-            return new GetHotelDto(hotel.Id, hotel.Name, hotel.Address, hotel.Rating, string.Empty);
+            return Result<GetHotelDto>.Failure(new Error(ErrorCodes.Conflict, $"Hotel '{hotelDto.Name}' already exists in the selected country."));
         }
 
-        public async Task UpdateHotelAsync(int hotelid, UpdateHotelDto updateDto)
+        var hotel = mapper.Map<Hotel>(hotelDto);
+        context.Hotels.Add(hotel);
+        await context.SaveChangesAsync();
+
+        var dto = await context.Hotels
+            .Where(h => h.Id == hotel.Id)
+            .ProjectTo<GetHotelDto>(mapper.ConfigurationProvider)
+            .FirstAsync();
+
+        return Result<GetHotelDto>.Success(dto);
+    }
+
+    public async Task<Result> UpdateHotelAsync(int id, UpdateHotelDto updateDto)
+    {
+        if (id != updateDto.Id)
         {
-            var hotel = await context.Hotels.FindAsync(hotelid) ?? throw new KeyNotFoundException
-                ("Hotel not found");
-
-            hotel.Name = updateDto.Name;
-            hotel.Address = updateDto.Address;
-            hotel.Rating = updateDto.Rating;
-            hotel.CountryId = updateDto.CountryId;
-            context.Hotels.Update(hotel);
-            await context.SaveChangesAsync();
-
-        }
-        public async Task DeleteHotelAsync(int hotelid)
-        {
-
-            var hotel = await context.Hotels.FindAsync(hotelid) ?? throw new KeyNotFoundException
-                ("Hotel not found");
-            context.Hotels.Remove(hotel);
-            await context.SaveChangesAsync();
+            return Result.BadRequest(new Error(ErrorCodes.Validation, "Id route value does not match payload Id."));
         }
 
-
-        public async Task<bool> HotelExistsAsync(int? hotelid)
+        var hotel = await context.Hotels.FindAsync(id);
+        if (hotel is null)
         {
-            return await context.Hotels.AnyAsync(e => e.Id == hotelid);//linq to check if the record exist in the database
+            return Result.NotFound(new Error(ErrorCodes.NotFound, $"Hotel '{id}' was not found."));
         }
+
+        var countryExists = await countriesService.CountryExistsAsync(updateDto.CountryId);
+        if (!countryExists)
+        {
+            return Result.NotFound(new Error(ErrorCodes.NotFound, $"Country '{updateDto.CountryId}' was not found."));
+        }
+
+        mapper.Map(updateDto, hotel);
+
+        context.Hotels.Update(hotel);
+        await context.SaveChangesAsync();
+
+        return Result.Success();
+    }
+
+    public async Task<Result> DeleteHotelAsync(int id)
+    {
+        var affected = await context.Hotels
+            .Where(q => q.Id == id)
+            .ExecuteDeleteAsync();
+
+        if (affected == 0)
+        {
+            return Result.NotFound(new Error(ErrorCodes.NotFound, $"Hotel '{id}' was not found."));
+        }
+
+        return Result.Success();
+    }
+
+    public async Task<bool> HotelExistsAsync(int id)
+    {
+        return await context.Hotels.AnyAsync(e => e.Id == id);
+    }
+
+    public async Task<bool> HotelExistsAsync(string name, int countryId)
+    {
+        return await context.Hotels
+            .AnyAsync(e => e.Name.ToLower().Trim() == name.ToLower().Trim() && e.CountryId == countryId);
     }
 }

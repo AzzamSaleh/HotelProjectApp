@@ -1,69 +1,56 @@
+using HotelProjectAPI.Controllers;
 using HotelProjectAPI.DTOs.Country;
-using HotelProjectAPI.Models;
 using HotelProjectAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CountriesController(CountriesService countriesService) : ControllerBase
+
+// to allow only authenticated users to access the endpoints in this controller,
+// you can use the [Authorize] attribute. This will ensure that only users who have been authenticated can access the actions within this controller.     
+[Authorize]
+public class CountriesController(ICountriesService countriesService) : BaseApiController
 {
-
-    // GET: api/Country
+    // GET: api/Countries
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<GetCountriesDto>>> GetCountry()
+    public async Task<ActionResult<IEnumerable<GetCountriesDto>>> GetCountries()
     {
-        var contries = await countriesService.GetCountriesAsync();
-        return Ok(contries);
+        var result = await countriesService.GetCountriesAsync();
+        return ToActionResult(result);
     }
 
-        // GET: api/Country/5
-        [HttpGet("{countryid}")]
-    public async Task<ActionResult<GetCountryDto>> GetCountry(int countryid)
+    // GET: api/Countries/5
+    [HttpGet("{id}")]
+    public async Task<ActionResult<GetCountryDto>> GetCountry(int id)
     {
-
-        var country = await countriesService.GetCountryAsync(countryid);
-
-        if (country == null)
-        {
-            return NotFound();//404
-        }
-
-        return country;
+        var result = await countriesService.GetCountryAsync(id);
+        return ToActionResult(result);
     }
 
-    // PUT: api/Country/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPut("{countryid}")]
-    public async Task<IActionResult> PutCountry(int countryid, UpdateCountryDto countryDto)
+    // PUT: api/Countries/5
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutCountry(int id, UpdateCountryDto updateDto)
     {
-        if (countryid != countryDto.Id)
-        {
-            return BadRequest();//400
-        }
-
-        await countriesService.UpdateCountryAsync(countryid, countryDto);
-        return NoContent();
+        var result = await countriesService.UpdateCountryAsync(id, updateDto);
+        return ToActionResult(result);
     }
 
-    // POST: api/Country
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    // POST: api/Countries
     [HttpPost]
-    public async Task<ActionResult<Country>> PostCountry(CreateCountryDto countryDto)
+    public async Task<ActionResult<GetCountryDto>> PostCountry(CreateCountryDto createDto)
     {
-        var resultDto = await countriesService.CreateCountryAsync(countryDto);
+        var result = await countriesService.CreateCountryAsync(createDto);
+        if (!result.IsSuccess) return MapErrorsToResponse(result.Errors);
 
-
-        return CreatedAtAction(nameof(GetCountry), new { countryid = resultDto.Id }, resultDto);
+        return CreatedAtAction(nameof(GetCountry), new { id = result.Value!.Id }, result.Value);
     }
 
-    // DELETE: api/Country/5
-    [HttpDelete("{countryid}")]
-    public async Task<IActionResult> DeleteCountry(int countryid)
+    // DELETE: api/Countries/5
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteCountry(int id)
     {
-        await countriesService.DeleteCountryAsync(countryid);
-        return NoContent();
+        var result = await countriesService.DeleteCountryAsync(id);
+        return ToActionResult(result);
     }
-
-    
 }
