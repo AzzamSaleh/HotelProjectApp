@@ -143,9 +143,13 @@ POST {{HotelProjectAPI_HostAddress}}/api/auth/register
 Content-Type: application/json
 
 {
-    "email": "testGG@exhample.com",
+    "email": "admin23@example.com",
   "password": "P@assword123!",
   "firstName": "John",
+  "lastName": "John",
+  "role": "Administrator"
+  
+
   
 }
 
@@ -165,6 +169,15 @@ Content-Type: application/json
   "email": "testGG@example.com",
   "password": "P@assword123!"
 
+}
+
+###
+
+POST {{HotelProjectAPI_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  //LoginUserDto
 }
 
 ###

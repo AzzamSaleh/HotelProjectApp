@@ -36,7 +36,7 @@ public class UsersService(UserManager<ApplicationUser> userManager,
         }
 
         // Assign the role to the user
-        //await userManager.AddToRoleAsync(user, registerUserDto.Role);
+        await userManager.AddToRoleAsync(user, registerUserDto.Role);
 
         // Create a RegisteredUserDto to return the registered user's information
         var registeredUser = new RegisteredUserDto
@@ -45,7 +45,7 @@ public class UsersService(UserManager<ApplicationUser> userManager,
             FirstName = user.FirstName,
             LastName = user.LastName,
             Id = user.Id,
-            // Role = registerUserDto.Role,
+            Role = registerUserDto.Role,
         };
 
         // Optional: Send confirmation Emai

@@ -26,9 +26,7 @@ public class HotelProjectDbContext : IdentityDbContext<ApplicationUser>
     {
         base.OnModelCreating(builder);
 
-        // builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        builder.Entity<ApiKey>(b => {
-            b.HasIndex(k => k.Key).IsUnique();
-            });
+         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+ 
     }
 }
