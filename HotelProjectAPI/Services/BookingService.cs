@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HotelProjectAPI.Services;
 
-public class BookingService(HotelProjectDbContext context, HttpContextAccessor httpContextAccessor) : IBookingService
+public class BookingService(HotelProjectDbContext context, IUsersService usersService, IMapper mapper) : IBookingService
 {
     public async Task<Result<IEnumerable<GetBookingDto>>> GetBookingsForHotelAsync(int hotelId)
     {
@@ -30,6 +30,33 @@ public class BookingService(HotelProjectDbContext context, HttpContextAccessor h
 
         return Result<IEnumerable<GetBookingDto>>.Success(bookings);
     }
+
+
+
+
+    public async Task<Result<IEnumerable<GetBookingDto>>> GetUserBookingsForHotelAsync(int hotelId)
+    {
+        var userId = usersService.UserId;
+
+        var hotelExists = await context.Hotels.AnyAsync(h => h.Id == hotelId);
+        if (!hotelExists)
+            return Result<IEnumerable<GetBookingDto>>.Failure(new Error(ErrorCodes.NotFound, $"Hotel '{hotelId}' was not found."));
+
+        var bookings = await context.Bookings
+            .Where(b => b.HotelId == hotelId && b.UserId == userId)
+            .OrderBy(b => b.CheckIn)
+            .ProjectTo<GetBookingDto>(mapper.ConfigurationProvider)
+            .ToListAsync();
+
+        return Result<IEnumerable<GetBookingDto>>.Success(bookings);
+    }
+
+
+
+
+
+
+
 
     public async Task<Result<GetBookingDto>> CreateBookingAsync(CreateBookingDto dto)
     {
@@ -73,6 +100,9 @@ public class BookingService(HotelProjectDbContext context, HttpContextAccessor h
 
         if (overlaps)
             return Result<GetBookingDto>.Failure(new Error(ErrorCodes.Conflict, "The selected dates overlap with an existing booking."));
+
+
+
 
         var booking = await context.Bookings
             .Include(b => b.Hotel)
@@ -127,6 +157,75 @@ public class BookingService(HotelProjectDbContext context, HttpContextAccessor h
 
 
 
+    public async Task<Result> CancelBookingAsync(int hotelId, int bookingId)
+    {
+        var userId = usersService.UserId;
+
+        var booking = await context.Bookings
+            .Include(b => b.Hotel)
+            .FirstOrDefaultAsync(b =>
+                b.Id == bookingId
+                && b.HotelId == hotelId
+                && b.UserId == userId);
+
+        if (booking is null)
+            return Result.Failure(new Error(ErrorCodes.NotFound, $"Booking '{bookingId}' was not found."));
+
+        if (booking.Status == BookingStatus.Cancelled)
+            return Result.Failure(new Error(ErrorCodes.Conflict, "This booking has already been cancelled."));
+
+        booking.Status = BookingStatus.Cancelled;
+        booking.UpdatedAtUtc = DateTime.UtcNow;
+        await context.SaveChangesAsync();
+
+        return Result.Success();
+    }
+
+    public async Task<Result> AdminCancelBookingAsync(int hotelId, int bookingId)
+    {
+        var userId = usersService.UserId;
+
+        var booking = await context.Bookings
+            .Include(b => b.Hotel)
+            .FirstOrDefaultAsync(b =>
+                b.Id == bookingId
+                && b.HotelId == hotelId);
+
+        if (booking is null)
+            return Result.Failure(new Error(ErrorCodes.NotFound, $"Booking '{bookingId}' was not found."));
+
+        if (booking.Status == BookingStatus.Cancelled)
+            return Result.Failure(new Error(ErrorCodes.Conflict, "This booking has already been cancelled."));
+
+        booking.Status = BookingStatus.Cancelled;
+        booking.UpdatedAtUtc = DateTime.UtcNow;
+        await context.SaveChangesAsync();
+
+        return Result.Success();
+    }
+
+    public async Task<Result> AdminConfirmBookingAsync(int hotelId, int bookingId)
+    {
+        var userId = usersService.UserId;
+
+        var booking = await context.Bookings
+            .Include(b => b.Hotel)
+            .FirstOrDefaultAsync(b =>
+                b.Id == bookingId
+                && b.HotelId == hotelId);
+
+        if (booking is null)
+            return Result.Failure(new Error(ErrorCodes.NotFound, $"Booking '{bookingId}' was not found."));
+
+        if (booking.Status == BookingStatus.Cancelled)
+            return Result.Failure(new Error(ErrorCodes.Conflict, "This booking has already been cancelled."));
+
+        booking.Status = BookingStatus.Confirmed;
+        booking.UpdatedAtUtc = DateTime.UtcNow;
+        await context.SaveChangesAsync();
+
+        return Result.Success();
+    }
 
 
 }
