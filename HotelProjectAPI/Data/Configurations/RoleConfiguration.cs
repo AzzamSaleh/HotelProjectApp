@@ -6,6 +6,11 @@ namespace HotelProjectAPI.Data.Configurations;
 
 public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
 {
+
+    // Seed initial roles into the database
+    // This method is called during the model creation process to configure the IdentityRole entity
+    // It adds two roles: "Administrator" and "User" with predefined IDs and concurrency stamps
+    // The roles are normalized for case-insensitive comparisons
     public void Configure(EntityTypeBuilder<IdentityRole> builder)
     {
         builder.HasData(
@@ -22,6 +27,13 @@ public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
                ConcurrencyStamp = "f6e5d4c3-b2a1-4b5c-9d8e-0987654321ba",
                Name = "User",
                NormalizedName = "USER"
+           },
+           new IdentityRole
+           {
+               Id = "36aac992-6a6c-4527-4c8a-52e7c145ca39",
+               ConcurrencyStamp = "f6e5d4c3-b2a1-4b5c-9d8e-0987654321ba",
+               Name = "Hotel Admin",
+               NormalizedName = "HOTEL ADMIN"
            }
        );
     }

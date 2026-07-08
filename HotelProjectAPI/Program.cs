@@ -23,11 +23,13 @@ builder.Services.AddDbContext<HotelProjectDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 
-
+//register services for dependency injection in ioC container, so that they can be injected into controllers or other services where needed
 builder.Services.AddScoped<ICountriesService, CountriesService>();
 builder.Services.AddScoped<IHotelsService, HotelsService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IApiKeyValidatorService, ApiKeyValidatorService>();
+
 
 builder.Services.AddAutoMapper(cfg =>
 {
@@ -45,6 +47,21 @@ builder.Services.AddAutoMapper(cfg =>
 builder.Services.AddIdentityApiEndpoints<ApplicationUser>(option => { })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<HotelProjectDbContext>();
+
+
+
+// Add HttpContextAccessor to access the current HTTP context in services
+// This is useful for accessing user information, request details, etc., in services like BookingService
+// It allows services to access the current HTTP context, which is necessary for operations like retrieving the current user's ID for bookings.
+builder.Services.AddHttpContextAccessor();
+
+
+
+
+
+
+
+
 
 
 
