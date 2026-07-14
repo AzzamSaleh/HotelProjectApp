@@ -1,6 +1,6 @@
-﻿using HotelProjectAPI.Contracts;
-using HotelProjectAPI.DTOs.Auth;
-using HotelProjectAPI.Services;
+﻿using HotelProject.Api.Application.Contracts;
+using HotelProject.Api.Application.DTOs.Auth;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

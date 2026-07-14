@@ -1,7 +1,7 @@
+using HotelProject.Api.Application.Contracts;
+using HotelProject.Api.Application.DTOs.Country;
 using HotelProject.Api.Common.Constants;
-using HotelProjectAPI.Contracts;
 using HotelProjectAPI.Controllers;
-using HotelProjectAPI.DTOs.Country;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

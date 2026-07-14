@@ -1,7 +1,5 @@
-﻿using HotelProjectAPI.Contracts;
-using HotelProjectAPI.DTOs.Auth;
-
-using HotelProjectAPI.Services;
+﻿using HotelProject.Api.Application.Contracts;
+using HotelProject.Api.Application.DTOs.Auth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;

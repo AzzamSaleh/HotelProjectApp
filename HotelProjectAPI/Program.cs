@@ -1,11 +1,11 @@
 
+using HotelProject.Api.Application.Contracts;
+using HotelProject.Api.Application.Services;
 using HotelProject.Api.Common.Constants;
 using HotelProject.Api.Common.Models;
 using HotelProject.Api.Domain;
 using HotelProject.Api.Domain.Models;
-using HotelProjectAPI.Contracts;
 using HotelProjectAPI.Handlers;
-using HotelProjectAPI.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;

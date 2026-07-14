@@ -1,6 +1,6 @@
 ﻿using Azure.Core;
+using HotelProject.Api.Application.Contracts;
 using HotelProject.Api.Common.Constants;
-using HotelProjectAPI.Contracts;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;

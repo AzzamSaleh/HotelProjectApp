@@ -1,12 +1,12 @@
 using HotelProject.Api.Common.Constants;
-using HotelProjectAPI.Contracts;
 using HotelProjectAPI.Controllers;
 using HotelProject.Api.Domain.Models;
-using HotelProjectAPI.DTOs.Hotel;
 using HotelProject.Api.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using HotelProject.Api.Application.DTOs.Hotel;
+using HotelProject.Api.Application.Contracts;
 
 [Route("api/[controller]")]
 [ApiController]
