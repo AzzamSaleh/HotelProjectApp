@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using HotelProject.Api.Domain.Models;
 using HotelProjectAPI.DTOs.Booking;
 using HotelProjectAPI.DTOs.Country;
 using HotelProjectAPI.DTOs.Hotel;
-using HotelProjectAPI.Models;
 
 namespace HotelProjectAPI.MappingProfiles;
 

@@ -1,4 +1,4 @@
-﻿namespace HotelProjectAPI.Models
+﻿namespace HotelProject.Api.Domain.Models
 {
     public class Country
     {

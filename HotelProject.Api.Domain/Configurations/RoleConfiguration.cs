@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace HotelProjectAPI.Data.Configurations;
+namespace HotelProject.Api.Domain.Configurations;
 
 public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
 {

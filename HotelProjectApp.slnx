@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="HotelProject.Api.Common/HotelProject.Api.Common.csproj" Id="ffdcf99d-3457-41cc-9c4f-5ca0f8c90161" />
+  <Project Path="HotelProject.Api.Domain/HotelProject.Api.Domain.csproj" Id="bda82b81-084b-4e54-986d-548d7b0e731d" />
   <Project Path="HotelProjectAPI/HotelProjectAPI.csproj" />
 </Solution>

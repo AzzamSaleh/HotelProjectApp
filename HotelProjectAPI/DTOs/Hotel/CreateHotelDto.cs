@@ -1,4 +1,4 @@
-﻿using HotelProjectAPI.Models;
+﻿
 using System.ComponentModel.DataAnnotations;
 
 namespace HotelProjectAPI.DTOs.Hotel;

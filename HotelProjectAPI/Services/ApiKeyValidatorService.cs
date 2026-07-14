@@ -1,5 +1,5 @@
 ﻿using HotelProjectAPI.Contracts;
-using HotelProjectAPI.Data;
+using HotelProject.Api.Domain;
 
 namespace HotelProjectAPI.Services;
 

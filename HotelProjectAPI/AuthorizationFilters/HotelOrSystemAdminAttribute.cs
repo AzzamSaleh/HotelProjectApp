@@ -1,12 +1,12 @@
 ﻿using HotelProject.Api.Common.Constants;
-using HotelProjectAPI.Data;
+using HotelProject.Api.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace HotelListing.Api.AuthorizationFilters;
+namespace HotelProjectAPI.AuthorizationFilters;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false)]
 public sealed class HotelOrSystemAdminAttribute : TypeFilterAttribute

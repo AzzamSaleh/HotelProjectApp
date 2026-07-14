@@ -2,9 +2,10 @@
 using AutoMapper.QueryableExtensions;
 using HotelProject.Api.Common.Constants;
 using HotelProject.Api.Common.Results;
-using HotelProjectAPI.Data;
+using HotelProject.Api.Domain;
+using HotelProject.Api.Domain.Models;
+using HotelProjectAPI.Contracts;
 using HotelProjectAPI.DTOs.Country;
-using HotelProjectAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelProjectAPI.Services;

@@ -1,4 +1,4 @@
-﻿namespace HotelProjectAPI.Models;
+﻿namespace HotelProject.Api.Domain.Models;
 
 //many to many relationship between Hotel and ApplicationUser through HotelAdmin
 public class HotelAdmin

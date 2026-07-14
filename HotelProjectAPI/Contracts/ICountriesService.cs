@@ -1,7 +1,7 @@
 ﻿using HotelProject.Api.Common.Results;
 using HotelProjectAPI.DTOs.Country;
 
-namespace HotelProjectAPI.Services
+namespace HotelProjectAPI.Contracts
 {
     public interface ICountriesService
     {

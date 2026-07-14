@@ -1,10 +1,10 @@
-﻿using HotelProjectAPI.Models;
+﻿using HotelProject.Api.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace HotelProjectAPI.Data;
+namespace HotelProject.Api.Domain;
 
 public class HotelProjectDbContext : IdentityDbContext<ApplicationUser>
     //IdentityDbContext<IdentityUser> is a DbContext that includes all the necessary tables and configurations for ASP.NET Core Identity with IdentityUser as the user entity

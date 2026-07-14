@@ -1,4 +1,4 @@
-﻿using HotelListing.Api.AuthorizationFilters;
+﻿using HotelProjectAPI.AuthorizationFilters;
 using HotelProjectAPI.Contracts;
 using HotelProjectAPI.DTOs.Booking;
 using Microsoft.AspNetCore.Authorization;

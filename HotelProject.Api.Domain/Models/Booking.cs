@@ -1,6 +1,6 @@
-﻿using HotelProjectAPI.Data.Enums;
+﻿using HotelProject.Api.Domain.Enums;
 
-namespace HotelProjectAPI.Models;
+namespace HotelProject.Api.Domain.Models;
 
 public class Booking
 {

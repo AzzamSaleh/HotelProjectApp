@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HotelProjectAPI.Models;
+namespace HotelProject.Api.Domain.Models;
 
 public class ApiKey
 {

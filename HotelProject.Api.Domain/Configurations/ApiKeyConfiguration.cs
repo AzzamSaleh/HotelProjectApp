@@ -1,7 +1,7 @@
-﻿using HotelProjectAPI.Models;
+﻿using HotelProject.Api.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-namespace HotelProjectAPI.Data.Configurations;
+namespace HotelProject.Api.Domain.Configurations;
 
 public class ApiKeyConfiguration : IEntityTypeConfiguration<ApiKey>
 {

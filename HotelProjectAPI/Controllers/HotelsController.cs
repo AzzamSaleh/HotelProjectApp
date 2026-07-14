@@ -1,9 +1,9 @@
 using HotelProject.Api.Common.Constants;
+using HotelProjectAPI.Contracts;
 using HotelProjectAPI.Controllers;
-using HotelProjectAPI.Data;
+using HotelProject.Api.Domain.Models;
 using HotelProjectAPI.DTOs.Hotel;
-using HotelProjectAPI.Models;
-using HotelProjectAPI.Services;
+using HotelProject.Api.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

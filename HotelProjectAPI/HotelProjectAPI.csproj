@@ -18,15 +18,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.8">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+	  
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HotelProject.Api.Common\HotelProject.Api.Common.csproj" />
+    <ProjectReference Include="..\HotelProject.Api.Domain\HotelProject.Api.Domain.csproj" />
   </ItemGroup>
 
 </Project>

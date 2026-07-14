@@ -1,4 +1,4 @@
-﻿namespace HotelProjectAPI.Data.Enums;
+﻿namespace HotelProject.Api.Domain.Enums;
 
 public enum BookingStatus
 {
