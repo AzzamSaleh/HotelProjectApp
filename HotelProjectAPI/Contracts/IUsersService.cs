@@ -1,5 +1,5 @@
-﻿using HotelProjectAPI.DTOs.Auth;
-using HotelProjectAPI.Results;
+﻿using HotelProject.Api.Common.Results;
+using HotelProjectAPI.DTOs.Auth;
 
 namespace HotelProjectAPI.Contracts;
 

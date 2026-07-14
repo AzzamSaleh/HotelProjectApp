@@ -1,5 +1,5 @@
-﻿using HotelProjectAPI.DTOs.Booking;
-using HotelProjectAPI.Results;
+﻿using HotelProject.Api.Common.Results;
+using HotelProjectAPI.DTOs.Booking;
 
 namespace HotelProjectAPI.Contracts
 {

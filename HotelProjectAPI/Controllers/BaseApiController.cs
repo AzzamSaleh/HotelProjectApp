@@ -1,5 +1,5 @@
-﻿using HotelProjectAPI.Constants;
-using HotelProjectAPI.Results;
+﻿using HotelProject.Api.Common.Constants;
+using HotelProject.Api.Common.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelProjectAPI.Controllers;

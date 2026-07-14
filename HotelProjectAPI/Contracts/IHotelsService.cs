@@ -1,5 +1,5 @@
-﻿using HotelProjectAPI.DTOs.Hotel;
-using HotelProjectAPI.Results;
+﻿using HotelProject.Api.Common.Results;
+using HotelProjectAPI.DTOs.Hotel;
 
 namespace HotelProjectAPI.Services
 {

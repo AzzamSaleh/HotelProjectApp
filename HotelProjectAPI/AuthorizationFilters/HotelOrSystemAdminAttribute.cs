@@ -1,4 +1,5 @@
-﻿using HotelProjectAPI.Data;
+﻿using HotelProject.Api.Common.Constants;
+using HotelProjectAPI.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +29,7 @@ public class HotelOrSystemAdminFilter(HotelProjectDbContext dbContext) : IAsyncA
         }
 
         // If user is a global Administrator, allow immediately
-        if (httpUser!.IsInRole("Administrator"))
+        if (httpUser!.IsInRole(RoleNames.Administrator))
         {
             return;//allow them throow
         }

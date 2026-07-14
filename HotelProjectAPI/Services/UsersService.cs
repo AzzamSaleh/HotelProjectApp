@@ -1,8 +1,8 @@
-﻿using HotelProjectAPI.Constants;
+﻿using HotelProject.Api.Common.Constants;
+using HotelProject.Api.Common.Results;
 using HotelProjectAPI.Contracts;
 using HotelProjectAPI.DTOs.Auth;
 using HotelProjectAPI.Models;
-using HotelProjectAPI.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

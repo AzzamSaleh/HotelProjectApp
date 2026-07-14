@@ -1,4 +1,6 @@
-using HotelProjectAPI.Constants;
+
+using HotelProject.Api.Common.Constants;
+using HotelProject.Api.Common.Models;
 using HotelProjectAPI.Contracts;
 using HotelProjectAPI.Data;
 using HotelProjectAPI.Handlers;
@@ -62,8 +64,9 @@ builder.Services.AddHttpContextAccessor();
 
 
 
-
-
+//bind the JwtSettings section from the configuration to the JwtSettings class, so that it can be injected into services or controllers where needed
+//bind our project appsettings.json to our jwt model
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 
 
 

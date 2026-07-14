@@ -1,4 +1,4 @@
-﻿namespace HotelProjectAPI.Constants;
+﻿namespace HotelProject.Api.Common.Constants;
 
 
 // in this class we can define default values

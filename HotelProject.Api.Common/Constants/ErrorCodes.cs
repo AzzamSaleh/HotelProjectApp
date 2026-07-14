@@ -1,4 +1,4 @@
-﻿namespace HotelProjectAPI.Constants;
+﻿namespace HotelProject.Api.Common.Constants;
 
 
 public static class ErrorCodes
